@@ -1,0 +1,15 @@
+Date,Category,Description,Amount,Type
+2026-08-01,Food,Restaurant,25.50,Expense
+2026-08-02,Income,Paycheck,850.00,Income
+2026-08-03,Transportation,Gas,42.00,Expense
+2026-08-04,Entertainment,Movie,15.00,Expense
+2026-08-05,Food,Grocery Store,75.25,Expense
+2026-08-06,Income,Freelance Work,300.00,Income
+2026-08-07,Utilities,Electric Bill,85.00,Expense
+2026-08-08,Transportation,Gas,40.00,Expense
+2026-08-09,Entertainment,Concert,60.00,Expense
+2026-08-10,Food,Restaurant,32.75,Expense
+2026-08-19,Food,Sushi,20.0,Expense
+2026-08-19,Shopping,Clothes,200.0,Expense
+2026-08-20,Transportation,Bus,5.0,Expense
+2026-08-19,Tech,Laptop,700.0,Expense
