@@ -213,6 +213,83 @@ def show_budget_status(transaction_file, budget_file):
         print(f"Remaining:  ${remaining:.2f}")
         print(f"Status:     {status}")
 
+def set_budget(filename):
+    category = input("Category: ").strip()
+
+    while True:
+        try:
+            budget = float(input("Budget Amount: $"))
+
+            if budget <= 0:
+                print("Budget must be greater than 0.")
+                continue
+
+            break
+
+        except ValueError:
+            print("Please enter a valid number.")
+
+    budgets = {}
+
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            budgets[row["Category"]] = float(row["Budget"])
+
+    budgets[category] = budget
+
+    with open(filename, "w", newline="") as file:
+        writer = csv.writer(file, lineterminator="\n")
+        writer.writerow(["Category", "Budget"])
+
+        for category_name, amount in budgets.items():
+            writer.writerow([category_name, amount])
+
+    print(f"Budget for {category} updated successfully!")
+
+def view_budgets(filename):
+    print()
+    print("===== CURRENT BUDGETS =====")
+
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            print(
+                f"{row['Category']:<20} "
+                f"${float(row['Budget']):.2f}"
+            )
+
+def budget_management(transaction_file, budget_file):
+    while True:
+        print()
+        print("===== BUDGET MANAGEMENT =====")
+        print("1. Set Budget")
+        print("2. View Budgets")
+        print("3. Budget Status")
+        print("4. Back")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            set_budget(budget_file)
+
+        elif choice == "2":
+            view_budgets(budget_file)
+
+        elif choice == "3":
+            show_budget_status(
+                transaction_file,
+                budget_file
+            )
+
+        elif choice == "4":
+            break
+
+        else:
+            print("Invalid option. Please choose 1-4.")
+
 def view_transactions(filename):
     with open(filename, "r") as file:
         reader = csv.DictReader(file)
@@ -259,7 +336,7 @@ def main():
         print("3. Financial Summary")
         print("4. Expense by Category")
         print("5. Monthly Analysis")
-        print("6. Budget Status")
+        print("6. Budget Management")
         print("7. Exit")
 
         choice = input("Choose an option: ")
@@ -280,10 +357,7 @@ def main():
             show_monthly_analysis(filename)
 
         elif choice == "6":
-            show_budget_status(
-            filename, 
-            "data/budgets.csv"
-            )
+            budget_management(filename, "data/budgets.csv")
 
         elif choice == "7":
             print("Goodbye!")
