@@ -91,6 +91,52 @@ def analyze_transactions(filename, starting_balance):
 
     return total_income, total_expenses, net_income, current_balance
 
+def analyze_month(filename, selected_month):
+    monthly_income = 0
+    monthly_expenses = 0
+
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+
+        for transaction in reader:
+            if transaction["Date"].startswith(selected_month):
+                amount = float(transaction["Amount"])
+
+                if transaction["Type"] == "Income":
+                    monthly_income += amount
+
+                elif transaction["Type"] == "Expense":
+                    monthly_expenses += amount
+
+    monthly_net = monthly_income - monthly_expenses
+
+    return monthly_income, monthly_expenses, monthly_net
+
+def show_monthly_analysis(filename):
+    while True:
+        selected_month = input(
+            "Enter month (YYYY-MM): "
+        )
+
+        try:
+            datetime.strptime(selected_month, "%Y-%m")
+            break
+
+        except ValueError:
+            print("Please enter a valid month in YYYY-MM format.")
+
+    income, expenses, net_income = analyze_month(
+        filename,
+        selected_month
+    )
+
+    print()
+    print("===== MONTHLY ANALYSIS =====")
+    print(f"Month:          {selected_month}")
+    print(f"Income:         ${income:.2f}")
+    print(f"Expenses:       ${expenses:.2f}")
+    print(f"Net Income:     ${net_income:.2f}")
+
 def analyze_categories(filename):
     category_totals = {}
 
@@ -129,6 +175,43 @@ def show_category_analysis(filename):
         f"Largest Category: {largest_category} "
         f"(${largest_amount:.2f})"
     )
+
+def analyze_budgets(transaction_file, budget_file):
+    category_totals = analyze_categories(transaction_file)
+    budgets = {}
+
+    with open(budget_file, "r") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            budgets[row["Category"]] = float(row["Budget"])
+
+    return category_totals, budgets
+
+def show_budget_status(transaction_file, budget_file):
+    category_totals, budgets = analyze_budgets(
+        transaction_file,
+        budget_file
+    )
+
+    print()
+    print("===== BUDGET STATUS =====")
+
+    for category, budget in budgets.items():
+        spent = category_totals.get(category, 0)
+        remaining = budget - spent
+
+        if remaining >= 0:
+            status = "Under Budget"
+        else:
+            status = "OVER BUDGET"
+
+        print()
+        print(category)
+        print(f"Budget:     ${budget:.2f}")
+        print(f"Spent:      ${spent:.2f}")
+        print(f"Remaining:  ${remaining:.2f}")
+        print(f"Status:     {status}")
 
 def view_transactions(filename):
     with open(filename, "r") as file:
@@ -175,7 +258,9 @@ def main():
         print("2. View Transactions")
         print("3. Financial Summary")
         print("4. Expense by Category")
-        print("5. Exit")
+        print("5. Monthly Analysis")
+        print("6. Budget Status")
+        print("7. Exit")
 
         choice = input("Choose an option: ")
 
@@ -190,12 +275,22 @@ def main():
 
         elif choice == "4":
             show_category_analysis(filename)
+
         elif choice == "5":
+            show_monthly_analysis(filename)
+
+        elif choice == "6":
+            show_budget_status(
+            filename, 
+            "data/budgets.csv"
+            )
+
+        elif choice == "7":
             print("Goodbye!")
             break
 
         else:
-            print("Invalid option. Please choose 1-5.")
+            print("Invalid option. Please choose 1-7.")
 
 
 main()
