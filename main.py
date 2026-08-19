@@ -1,12 +1,53 @@
 import csv
+from datetime import datetime
 
 
 def add_transaction(filename):
-    date = input("Date (YYYY-MM-DD): ")
+    while True:
+        date = input("Date (YYYY-MM-DD): ")
+        try:
+            datetime.strptime(date, "%Y-%m-%d")
+            break
+        except ValueError:
+            print("Please enter a valid date in YYYY-MM-DD format.")
+
     category = input("Category: ")
     description = input("Description: ")
-    amount = float(input("Amount: $"))
-    transaction_type = input("Type (Income/Expense): ")
+
+    while True:
+        try:
+            amount = float(input("Amount: $"))
+
+            if amount <= 0:
+                print("Amount must be greater than 0.")
+                continue
+
+            break
+
+        except ValueError:
+            print("Please enter a valid number.")
+
+    while True:
+        transaction_type = input(
+            "Type (Income/Expense): "
+        ).strip().title()
+
+        if transaction_type in ["Income", "Expense"]:
+            break
+
+        print("Please enter either Income or Expense.")
+
+    with open(filename, "a", newline="") as file:
+        writer = csv.writer(file, lineterminator="\n")
+        writer.writerow([
+            date,
+            category,
+            description,
+            amount,
+            transaction_type
+        ])
+
+    print("Transaction added successfully!")
 
     with open(filename, "a", newline="") as file:
         writer = csv.writer(file, lineterminator="\n")
@@ -40,6 +81,45 @@ def analyze_transactions(filename):
     current_balance = total_income - total_expenses
 
     return total_income, total_expenses, net_income, current_balance
+
+def analyze_categories(filename):
+    category_totals = {}
+
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+
+        for transaction in reader:
+            if transaction["Type"] == "Expense":
+                category = transaction["Category"]
+                amount = float(transaction["Amount"])
+
+                if category not in category_totals:
+                    category_totals[category] = 0
+
+                category_totals[category] += amount
+
+    return category_totals
+
+def show_category_analysis(filename):
+    category_totals = analyze_categories(filename)
+
+    total_expenses = sum(category_totals.values())
+
+    print()
+    print("===== EXPENSE BY CATEGORY =====")
+
+    for category, total in category_totals.items():
+        percentage = (total / total_expenses) * 100
+        print(f"{category:<20} ${total:>8.2f}   {percentage:>6.2f}%")
+
+    largest_category = max(category_totals, key=category_totals.get)
+    largest_amount = category_totals[largest_category]
+
+    print()
+    print(
+        f"Largest Category: {largest_category} "
+        f"(${largest_amount:.2f})"
+    )
 
 def view_transactions(filename):
     with open(filename, "r") as file:
@@ -79,7 +159,8 @@ def main():
         print("1. Add Transaction")
         print("2. View Transactions")
         print("3. Financial Summary")
-        print("4. Exit")
+        print("4. Expense by Category")
+        print("5. Exit")
 
         choice = input("Choose an option: ")
 
@@ -93,11 +174,13 @@ def main():
             show_summary(filename)
 
         elif choice == "4":
+            show_category_analysis(filename)
+        elif choice == "5":
             print("Goodbye!")
             break
 
         else:
-            print("Invalid option. Please choose 1-4.")
+            print("Invalid option. Please choose 1-5.")
 
 
 main()
