@@ -61,8 +61,17 @@ def add_transaction(filename):
 
     print("Transaction added successfully!")
 
+def get_starting_balance(filename):
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
 
-def analyze_transactions(filename):
+        for row in reader:
+            if row["Setting"] == "Starting Balance":
+                return float(row["Value"])
+
+    return 0.0
+
+def analyze_transactions(filename, starting_balance):
     total_income = 0
     total_expenses = 0
 
@@ -78,7 +87,7 @@ def analyze_transactions(filename):
                 total_expenses += amount
 
     net_income = total_income - total_expenses
-    current_balance = total_income - total_expenses
+    current_balance = starting_balance + total_income - total_expenses
 
     return total_income, total_expenses, net_income, current_balance
 
@@ -138,14 +147,20 @@ def view_transactions(filename):
             )
 
 def show_summary(filename):
-    income, expenses, net_income, balance = analyze_transactions(filename)
+    starting_balance = get_starting_balance("data/settings.csv")
+    income, expenses, net_income, balance = analyze_transactions(
+        filename,
+        starting_balance
+    )
 
     print()
     print("===== FINANCIAL SUMMARY =====")
+    print(f"Starting Balance: ${starting_balance:.2f}")
     print(f"Total Income:    ${income:.2f}")
     print(f"Total Expenses:  ${expenses:.2f}")
     print(f"Net Income:      ${net_income:.2f}")
     print(f"Current Balance: ${balance:.2f}")
+    
 
 
 def main():
