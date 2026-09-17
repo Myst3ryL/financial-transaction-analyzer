@@ -1,4 +1,9 @@
 from transaction_manager import add_transaction, view_transactions
+from visualization import (
+    plot_expenses_by_category,
+    plot_income_vs_expenses,
+    plot_monthly_trends
+)
 
 from financial_analysis import (
     show_summary,
@@ -24,7 +29,10 @@ def main():
         print("5. Monthly Analysis")
         print("6. Budget Management")
         print("7. Financial Insights")
-        print("8. Exit")
+        print("8. Expense Visualization")
+        print("9. Income vs Expenses Visualization")
+        print("10. Monthly Trends Visualization")
+        print("11. Exit")
 
         choice = input("Choose an option: ")
 
@@ -53,11 +61,20 @@ def main():
             show_insights(filename)
 
         elif choice == "8":
+            plot_expenses_by_category(filename)
+
+        elif choice == "9":
+            plot_income_vs_expenses(filename)
+
+        elif choice == "10":
+            plot_monthly_trends(filename)
+
+        elif choice == "11":
             print("Goodbye!")
             break
 
         else:
-            print("Invalid option. Please choose 1-8.")
+            print("Invalid option. Please choose 1-11.")
 
 
 main()

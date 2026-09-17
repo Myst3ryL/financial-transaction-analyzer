@@ -21,6 +21,9 @@ This project combines accounting concepts with programming and data analysis to 
 - Compare actual spending against budget limits
 - Identify categories that are over or under budget
 - Store financial data using CSV files
+- Expense visualization by category using bar charts
+- Income vs. expenses comparison chart
+- Monthly expense trend visualization using line charts
 
 ## Technologies
 
@@ -30,6 +33,7 @@ This project combines accounting concepts with programming and data analysis to 
 - Data analysis
 - Error handling
 - Git & GitHub
+- Matplotlib for data visualization
 
 ## Project Structure
 
@@ -175,7 +179,8 @@ Future Improvements
 
 Potential future improvements include:
 
-Data visualization using Python and Matplotlib
+- Interactive dashboards
+- More detailed monthly and yearly trend analysis
 Spending trend charts
 Income vs. expense charts
 Improved monthly reporting
