@@ -1,6 +1,9 @@
 from pathlib import Path
 
-from transaction_manager import add_transaction, view_transactions
+from transaction_manager import (
+    transaction_operations_menu,
+    view_transactions,
+)
 from visualization import (
     plot_expenses_by_category,
     plot_income_vs_expenses,
@@ -35,56 +38,52 @@ def main():
         print("========================================")
         print("      FINANCIAL TRANSACTION ANALYZER")
         print("========================================")
-        print("1. Add Transaction")
-        print("2. View Transactions")
-        print("3. Financial Summary")
-        print("4. Expense by Category")
-        print("5. Monthly Analysis")
-        print("6. Budget Management")
-        print("7. Financial Insights")
-        print("8. Expense Visualization")
-        print("9. Income vs Expenses Visualization")
-        print("10. Monthly Trends Visualization")
-        print("11. Exit")
+        print("1. Transaction Operations (Add/View/Search/Edit/Delete)")
+        print("2. Financial Summary")
+        print("3. Expense by Category")
+        print("4. Monthly Analysis")
+        print("5. Budget Management")
+        print("6. Financial Insights")
+        print("7. Expense Visualization")
+        print("8. Income vs Expenses Visualization")
+        print("9. Monthly Trends Visualization")
+        print("10. Exit")
 
         choice = input("Choose an option: ").strip()
 
         if choice == "1":
-            add_transaction(TRANSACTION_FILE)
+            transaction_operations_menu(TRANSACTION_FILE)
 
         elif choice == "2":
-            view_transactions(TRANSACTION_FILE)
-
-        elif choice == "3":
             show_summary(TRANSACTION_FILE, SETTINGS_FILE)
 
-        elif choice == "4":
+        elif choice == "3":
             show_category_analysis(TRANSACTION_FILE)
 
-        elif choice == "5":
+        elif choice == "4":
             show_monthly_analysis(TRANSACTION_FILE)
 
-        elif choice == "6":
+        elif choice == "5":
             budget_management(TRANSACTION_FILE, BUDGET_FILE)
 
-        elif choice == "7":
+        elif choice == "6":
             show_insights(TRANSACTION_FILE)
 
-        elif choice == "8":
+        elif choice == "7":
             plot_expenses_by_category(TRANSACTION_FILE)
 
-        elif choice == "9":
+        elif choice == "8":
             plot_income_vs_expenses(TRANSACTION_FILE)
 
-        elif choice == "10":
+        elif choice == "9":
             plot_monthly_trends(TRANSACTION_FILE)
 
-        elif choice == "11":
+        elif choice == "10":
             print("Goodbye!")
             break
 
         else:
-            print("Invalid option. Please choose 1-11.")
+            print("Invalid option. Please choose 1-10.")
 
 
 if __name__ == "__main__":
