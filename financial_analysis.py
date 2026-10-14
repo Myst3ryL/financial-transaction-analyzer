@@ -193,6 +193,34 @@ def calculate_insights(filename):
         expense_count
     )
 
+def analyze_categories_by_month(filename, selected_month):
+    category_totals = {}
+
+    if not os.path.exists(filename):
+        return category_totals
+
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+        for transaction in reader:
+            date_val = transaction.get("Date", "").strip()
+            trans_type = transaction.get("Type", "").strip().title()
+
+            if date_val.startswith(selected_month):
+                try:
+                    amount = float(transaction["Amount"])
+                except (ValueError, KeyError):
+                    continue
+
+                category = transaction.get("Category", "Uncategorized").strip().title()
+
+                if trans_type == "Expense":
+                    category_totals[category] = category_totals.get(category, 0.0) + amount
+                elif trans_type == "Income":
+                    # Offset the spent amount for that category
+                    category_totals[category] = category_totals.get(category, 0.0) - amount
+
+    return category_totals
+
 
 def show_insights(filename):
     (

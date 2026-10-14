@@ -1,8 +1,8 @@
-Category,Budget
-Food,400.0
-Transportation,150.0
-Entertainment,100.0
-Utilities,150.0
-Shopping,300.0
-Tech,500.0
-Travel,250.0
+Month,Category,Budget
+2026-08,Food,400.0
+2026-08,Transportation,150.0
+2026-08,Entertainment,100.0
+2026-08,Utilities,150.0
+2026-08,Shopping,300.0
+2026-08,Tech,500.0
+2026-08,Travel,250.0

@@ -91,69 +91,19 @@ python3 main.py
 
 The application will display an interactive menu where users can add transactions, analyze financial data, and manage budgets.
 
-Example
 ========================================
       FINANCIAL TRANSACTION ANALYZER
 ========================================
-1. Add Transaction
-2. View Transactions
-3. Financial Summary
-4. Expense by Category
-5. Monthly Analysis
-6. Budget Management
-7. Financial Insights
-8. Exit
-
-
-Choose an option: 7
-
-
-===== FINANCIAL INSIGHTS =====
-Savings Rate:          -18.30%
-Largest Expense:       $700.00 (Laptop)
-Largest Category:      $700.00 (Tech)
-Average Expense:       $85.03
-Income Transactions:   2
-Expense Transactions:  16
-Financial Analysis
-
-The application can analyze financial transactions to provide information such as:
-
-Total income
-Total expenses
-Net income
-Current balance
-Spending by category
-Monthly income and expenses
-Savings rate
-Average expense
-Largest individual expense
-Largest spending category
-Number of income transactions
-Number of expense transactions
-Budget Management
-
-Users can create and manage spending limits for different categories.
-
-For example:
-
-===== BUDGET STATUS =====
-
-
-Food
-Budget:     $400.00
-Spent:      $153.50
-Remaining:  $246.50
-Status:     Under Budget
-
-
-Tech
-Budget:     $500.00
-Spent:      $700.00
-Remaining:  $-200.00
-Status:     OVER BUDGET
-
-This allows users to compare actual spending with planned spending limits.
+1. Transaction Operations (Add/View/Search/Edit/Delete)
+2. Financial Summary
+3. Expense by Category
+4. Monthly Analysis
+5. Budget Management
+6. Financial Insights
+7. Expense Visualization
+8. Income vs Expenses Visualization
+9. Monthly Trends Visualization
+10. Exit
 
 Skills Demonstrated
 

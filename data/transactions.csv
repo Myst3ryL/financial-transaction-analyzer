@@ -18,4 +18,6 @@ Date,Category,Description,Amount,Type
 2026-08-19,School,pens,10.0,Expense
 2026-08-19,School,pens,10.0,Expense
 2026-08-19,Food,Banana,5.0,Expense
-2026-07-15,Food,Test July Expense,50.0,Expense
+2026-07-10,Food,Fruits,100.00,Expense
+2026-07-02,Food,Veg,10.00,Expense
+2026-07-18,Food,Give money for food expense,200.00,Income
